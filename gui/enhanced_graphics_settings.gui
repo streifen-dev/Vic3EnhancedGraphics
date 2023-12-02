@@ -1,0 +1,55 @@
+﻿window = {
+	name = "enhanced_graphics_settings" # onclick = "[ExecuteConsoleCommand('gui.createwidget gui/enhanced_graphics_settings.gui enhanced_graphics_settings')]"
+	parentanchor = center
+	size = { 400 210 }
+	layer = windows_layer
+	filter_mouse = all
+	allow_outside = yes
+	alwaystransparent = no
+	
+	using = Window_Background
+	using = Window_Decoration
+	movable = yes
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Quick
+	}
+	
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Quick
+	}
+	
+	vbox = {
+		restrictparent_min = yes
+		using = Window_Margins
+		
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+
+			blockoverride "header_text"
+			{
+				raw_text = "Enhanced Graphics"
+			}
+
+			blockoverride "button_close"
+			{
+				onclick = "[ExecuteConsoleCommand('GUI.ClearWidgets enhanced_graphics_settings')]"
+			}
+		}
+		flowcontainer = {
+			direction = horizontal
+			button_standard = {
+				onclick = "[ExecuteConsoleCommand('shader_debug EG_FOW_ON')]"
+				onclick = "[GetVariableSystem.Toggle('EG_FOW_ON')]"
+				button_ignore = none
+				raw_tooltip = "#R Warning - Clicking this button may freeze your game for about a minute as shaders recompile. The game will run smoothly after the freeze.#!"
+				using = tooltip_ne
+				size = { 150 40 }
+				raw_text = "Toggle Fog of War"
+			}
+		}
+	}
+	
+}
