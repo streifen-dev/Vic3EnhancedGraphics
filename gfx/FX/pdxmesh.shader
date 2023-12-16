@@ -728,6 +728,13 @@ PixelShader =
 				#endif
 				Out.SSAOColor = float4( saturate ( SSAOColor_ ), Diffuse.a);
 
+				// MOD
+				#ifdef FLATMAP_DAY_NIGHT_MOD
+					Out.Color *= _NightWaterAdjustment;
+					Out.SSAOColor *= _NightWaterAdjustment;
+				#endif
+				// END MOD
+
 				return Out;
 			}
 		]]
