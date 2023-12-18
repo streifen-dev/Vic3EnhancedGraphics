@@ -113,17 +113,9 @@ PixelShader =
 					Flatmap = ApplyDynamicFlatmap( Flatmap, ProvinceCoords, Input.WorldSpacePos.xz );
 
 					// MOD
-					float4 intermediateColor = lerp(_FoWCloudsColor, _FoWCloudsColorSunset, _DayNightValue);
-					float4 finalColor = lerp(intermediateColor, _FoWCloudsColorNight, _DayNightValue);
-					float brightness = max(2 * abs(_DayNightValue - 0.5), 0.075);
-
-					Flatmap *= finalColor;
-					Flatmap *= brightness;
-
-					// Sunset is between 0.125 and 0.5 of _DayNightValue
-					float factor = smoothstep(0.125, 0.5, _DayNightValue);
-					Flatmap *= lerp(1.0, _FoWCloudsColorSunset, factor);
-
+					#ifndef EG_FLATMAP_DAYNIGHT_OFF
+						Flatmap *= _NightWaterAdjustment;
+					#endif
 					// END MOD
 
 					Water.rgb = lerp( Water.rgb, Flatmap, _FlatmapLerp );

@@ -369,14 +369,16 @@ PixelShader =
 						float3 Flatmap = PdxTex2D( FlatmapTexture, float2( MapCoords.x, 1.0 - MapCoords.y ) ).rgb;
 						Flatmap = ApplyDynamicFlatmap( Flatmap, ProvinceCoords, Input.WorldSpacePos.xz );
 
+						// MOD
+						#ifndef EG_FLATMAP_DAYNIGHT_OFF
+							Flatmap *= _NightWaterAdjustment;
+						#endif
+						// END MOD
+
 						// Border color overlay on flatmap
 						Flatmap *= lerp( vec3( 1.0 ), ColorOverlay, saturate( PreLightingBlend + PostLightingBlend ) );
 
 						Flatmap = ApplyFlatmapOverlay( Flatmap, MapCoords );
-
-						// MOD
-						FinalColor *= _NightWaterAdjustment;
-						// END MOD
 
 						FinalColor = lerp( FinalColor, Flatmap, _FlatmapLerp);
 					#endif
@@ -455,7 +457,9 @@ PixelShader =
 						Flatmap = ApplyDynamicFlatmap( Flatmap, ProvinceCoords, Input.WorldSpacePos.xz );
 
 						// MOD
-						Flatmap *= _NightWaterAdjustment;
+						#ifndef EG_FLATMAP_DAYNIGHT_OFF
+							Flatmap *= _NightWaterAdjustment;
+						#endif
 						// END MOD
 
 						// Border color overlay on flatmap
@@ -494,6 +498,12 @@ PixelShader =
 				float3 Flatmap = PdxTex2D( FlatmapTexture, float2( MapCoords.x, 1.0 - MapCoords.y ) ).rgb;
 				Flatmap = ApplyDynamicFlatmap( Flatmap, ProvinceCoords, Input.WorldSpacePos.xz );
 
+				// MOD
+				#ifndef EG_FLATMAP_DAYNIGHT_OFF
+					Flatmap *= _NightWaterAdjustment;
+				#endif
+				// END MOD
+
 				// Border color overlay
 				float3 ColorOverlay;
 				float PreLightingBlend;
@@ -513,10 +523,6 @@ PixelShader =
 				#ifdef TERRAIN_DEBUG
 					TerrainDebug( FinalColor, Input.WorldSpacePos );
 				#endif
-
-				// MOD
-				FinalColor *= _NightWaterAdjustment;
-				// END MOD
 
 				return float4( FinalColor, 1 );
 			}

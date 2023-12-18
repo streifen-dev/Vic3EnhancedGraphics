@@ -47,8 +47,11 @@ PixelShader =
 				float DayNightModifier = smoothstep( 0.3, 0.35, _DayNightValue );
 
 				// MOD
-				//float3 Color = lerp( vec3( 0.0 ), vec3( 0.75 ), DayNightModifier * ( 1.0 - _FlatmapLerp ) );
-				float3 Color = lerp( vec3( 0.0 ), vec3( 0.75 ), DayNightModifier );
+				#ifndef EG_FLATMAP_DAYNIGHT_OFF
+					float3 Color = lerp( vec3( 0.0 ), vec3( 0.75 ), DayNightModifier );
+				#else
+					float3 Color = lerp( vec3( 0.0 ), vec3( 0.75 ), DayNightModifier * ( 1.0 - _FlatmapLerp ) );
+				#endif
 				// END MOD
 
 				float3 FlatmapColor = Color; // Pre effects color

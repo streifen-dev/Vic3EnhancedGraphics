@@ -729,7 +729,7 @@ PixelShader =
 				Out.SSAOColor = float4( saturate ( SSAOColor_ ), Diffuse.a);
 
 				// MOD
-				#ifdef FLATMAP_DAY_NIGHT_MOD
+				#if defined(FLATMAP_DAY_NIGHT_MOD) && !defined(EG_FLATMAP_DAYNIGHT_OFF)
 					Out.Color *= _NightWaterAdjustment;
 					Out.SSAOColor *= _NightWaterAdjustment;
 				#endif

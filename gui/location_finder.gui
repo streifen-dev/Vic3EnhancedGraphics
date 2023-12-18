@@ -1,0 +1,218 @@
+default_popup =  {
+	name = "location_finder"
+	movable = yes
+	size = { 775 625 }
+	layer = top
+
+	parentanchor = center
+
+	blockoverride "behind_window" {
+		state = {
+			name = _show
+			start_sound = {
+				soundeffect = "event:/SFX/UI/MapLenses/location_finder"
+			}
+			on_start = "[GetVariableSystem.Set( 'finder_tabs', 'find_location' )]"
+		}
+	}
+	#blockoverride "window_header_name" {
+	#	text = "LOCATION_FINDER"
+	#}
+	textbox = {
+		visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'find_location' )]"
+		position = { 0 24 }
+		size = { 85% 40 }
+		text = "LOCATION_FINDER"
+		elide = right
+		parentanchor = hcenter
+		align = center|nobaseline
+		using = header_font
+		using = header_font_size
+		default_format = "#header"
+	}
+	textbox = {
+		visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' )]"
+		position = { 0 24 }
+		size = { 85% 40 }
+		text = "Enhanced Graphics Settings"
+		elide = right
+		parentanchor = hcenter
+		align = center|nobaseline
+		using = header_font
+		using = header_font_size
+		default_format = "#header"
+	}
+	blockoverride "header_back_button_visibility" {
+		visible = no
+	}
+
+	blockoverride "header_close_button_visibility" {
+		visible = yes
+	}
+
+	blockoverride "header_close_button" {
+		onclick = "[LocationFinder.Close]"
+	}
+
+	blockoverride "content" {
+		tab_buttons = {
+			position = { 0 -212 }
+			margin = { 20 20 }
+			blockoverride "first_button" {
+				raw_text = "Find Location"
+			}
+			blockoverride "first_button_click" {
+				onclick = "[GetVariableSystem.Set( 'finder_tabs', 'find_location' )]"
+			}
+			blockoverride "first_button_visibility" {
+				visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'find_location' )]"
+			}
+			blockoverride "first_button_visibility_checked" {
+				visible = "[Not(GetVariableSystem.HasValue( 'finder_tabs', 'find_location' ))]"
+			}
+			blockoverride "first_button_selected" {
+				raw_text = "#Bold Find Location#!"
+			}
+			blockoverride "first_button_name" {
+				raw_text = "find_location_tab"
+			}
+
+			blockoverride "second_button" {
+				raw_text = "Enhanced Graphics Settings"
+			}
+			blockoverride "second_button_click" {
+				onclick = "[GetVariableSystem.Set( 'finder_tabs', 'enhanced_graphics' )]"
+			}
+			blockoverride "second_button_visibility" {
+				visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' )]"
+			}
+			blockoverride "second_button_visibility_checked" {
+				visible = "[Not(GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' ))]"
+			}
+			blockoverride "second_button_selected" {
+				raw_text = "#Bold Enhanced Graphics Settings#!"
+			}
+			blockoverride "second_button_name" {
+				name = "enhanced_graphics_tab"
+			}
+		}
+
+		enhanced_graphics_area = {}
+		
+		flowcontainer = {
+			visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'find_location' )]"
+			direction = vertical
+			margin = { 50 0 }
+			margin_bottom = 30
+			margin_top = 120
+			flowcontainer = {
+				margin = { 10 10 }
+				margin_bottom = 0
+				using = default_list_position
+				spacing = 10
+				direction = vertical
+				editbox = {
+					visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'find_location' )]"
+					background = {
+						using = text_edit_bg
+					}
+					name = "finder_edit"
+					size = { 650 40 }
+					margin_left = 10
+					alwaystransparent = no
+					focuspolicy = all
+					focus_on_visible = yes
+					align = left|nobaseline
+				}
+				widget = {
+					visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' )]"
+					size = { 650 40 }
+				}
+
+				scrollarea = {
+					name = "finder_output_scrollarea"
+					size = { 660 420 }
+					scrollbarpolicy_horizontal = always_off
+					scrollwidget = {
+						fixedgridbox = {
+							visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'find_location' )]"
+							datamodel = "[LocationFinder.GetLocations]"
+							addcolumn = 650
+							addrow = 70
+
+							item = {
+								button = {
+									using = default_button
+									using = zoom_button_sound
+									size = { 650 70 }
+									onclick = "[Location.GoToLocation]"
+
+									flowcontainer = {
+										parentanchor = vcenter
+										direction = vertical
+										margin_left = 15
+										textbox = {
+											autoresize = yes
+											text = "#BOLD [Location.GetName]#!"
+											align = nobaseline
+											using = fontsize_large
+										}
+
+										textbox = {
+											visible = "[EqualTo_string(Location.GetType, 'state')]"
+											autoresize = yes
+											text = "[concept_state]"
+											align = nobaseline
+										}
+
+										textbox = {
+											visible = "[EqualTo_string(Location.GetType, 'country')]"
+											autoresize = yes
+											text = "[concept_country]"
+											align = nobaseline
+										}
+
+										textbox = {
+											visible = "[EqualTo_string(Location.GetType, 'state_region')]"
+											autoresize = yes
+											text = "[concept_state_region]"
+											align = nobaseline
+										}
+
+										textbox = {
+											visible = "[EqualTo_string(Location.GetType, 'province')]"
+											autoresize = yes
+											text = "[concept_province]"
+											align = nobaseline
+										}
+
+										textbox = {
+											visible = "[EqualTo_string(Location.GetType, 'city_hub')]"
+											autoresize = yes
+											text = "LEDGER_HUB_NAME"
+											align = nobaseline
+										}
+									}
+
+									textbox = {
+										visible = "[InDebugMode]"
+										autoresize = yes
+										text = "DEBUG ID: [Location.GetID]"
+										parentanchor = right|vcenter
+										widgetanchor = right|vcenter
+										align = right|nobaseline
+										position = { -10 0 }
+									}
+								}
+							}
+						}
+					}
+
+					scrollbar_vertical = {
+						using = vertical_scrollbar
+					}
+				}
+			}
+		}
+	}
+}

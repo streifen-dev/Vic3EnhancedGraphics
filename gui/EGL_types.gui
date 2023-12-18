@@ -1,0 +1,122 @@
+types MusicTypes
+{
+    type enhanced_graphics_area = flowcontainer {
+		visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' )]"
+		direction = vertical
+		margin = { 20 0 }
+		margin_bottom = 30
+		margin_top = 125
+		scrollbox = {
+			size = { 735 470 }
+			background = {
+				using = text_edit_bg
+			}
+			blockoverride "scrollbox_content" {
+				flowcontainer = {
+					direction = vertical
+					spacing = 10
+					default_header_clean_faded = {
+						size = { 380 44 }
+						blockoverride "text" {
+							raw_text = "#E Shader Settings#!"
+						}
+					}
+					flowcontainer = {
+						button_standard = {
+							onclick = "[ExecuteConsoleCommand('shader_debug EG_FOW_ON')]"
+							button_ignore = none
+							raw_tooltip = "#R Warning - Clicking this button may freeze your game for about a minute as shaders recompile. The game will run smoothly after the freeze.#!"
+							using = tooltip_ne
+							size = { 180 50 }
+							raw_text = "Fog of War Clouds"
+						}
+						button_standard = {
+							onclick = "[ExecuteConsoleCommand('shader_debug EG_FLATMAP_DAYNIGHT_OFF')]"
+							button_ignore = none
+							raw_tooltip = "#R Warning - Clicking this button may freeze your game for about a minute as shaders recompile. The game will run smoothly after the freeze.#!"
+							using = tooltip_ne
+							size = { 180 50 }
+							raw_text = "Papermap day/night cycle"
+						}
+					}
+					default_header_clean_faded = {
+						size = { 380 44 }
+						blockoverride "text" {
+							raw_text = "#E Tonemap Settings#!"
+						}
+					}
+					flowcontainer = {
+						button_standard = {
+							onclick = "[ExecuteConsoleCommand('shader_debug EG_VANILLA_TONEMAP')]"
+							onclick = "[GetVariableSystem.Toggle( 'vanilla_tonemap_enabled' )]"
+							enabled = "[Not(GetVariableSystem.Exists( 'darker_tonemap_enabled' ))]"
+							button_ignore = none
+							raw_tooltip = "#R Warning - Clicking this button may freeze your game for about a minute as shaders recompile. The game will run smoothly after the freeze.#!"
+							using = tooltip_ne
+							size = { 180 50 }
+							raw_text = "Vanilla Tonemap"
+						}
+						button_standard = {
+							onclick = "[ExecuteConsoleCommand('shader_debug EG_DARKER_TONEMAP')]"
+							onclick = "[GetVariableSystem.Toggle( 'darker_tonemap_enabled' )]"
+							enabled = "[Not(GetVariableSystem.Exists( 'vanilla_tonemap_enabled' ))]"
+							button_ignore = none
+							raw_tooltip = "#R Warning - Clicking this button may freeze your game for about a minute as shaders recompile. The game will run smoothly after the freeze.#!"
+							using = tooltip_ne
+							size = { 180 50 }
+							raw_text = "Darker Tonemap"
+						}
+					}
+					default_header_clean_faded = {
+						size = { 380 44 }
+						blockoverride "text" {
+							raw_text = "#E Gui Lighting#!"
+						}
+					}
+					flowcontainer = {
+						button_standard = {
+						    size = { 70 28 }
+						    enabled = "[Not(Or( Or( GetVariableSystem.Exists('gui_zero_eight'), GetVariableSystem.Exists('gui_zero_nine')), Or(GetVariableSystem.Exists('gui_one_one'), GetVariableSystem.Exists('gui_one_two'))))]"
+						    raw_tooltip = "Multiply Gui lighting by 0.7"
+					        raw_text = "0.7"
+					        onclick = "[GetVariableSystem.Toggle( 'gui_zero_seven' )]"
+					        onclick = "[ExecuteConsoleCommand('shader_debug gui_zero_seven')]"
+						}
+						button_standard = {
+						    size = { 70 28 }
+						    enabled = "[Not(Or( Or( GetVariableSystem.Exists('gui_zero_seven'), GetVariableSystem.Exists('gui_zero_nine')), Or(GetVariableSystem.Exists('gui_one_one'), GetVariableSystem.Exists('gui_one_two'))))]"
+						    raw_tooltip = "Multiply Gui lighting by 0.8"
+					        raw_text = "0.8"
+					        onclick = "[GetVariableSystem.Toggle( 'gui_zero_eight' )]"
+					        onclick = "[ExecuteConsoleCommand('shader_debug gui_zero_eight')]"
+						}
+						button_standard = {
+						    size = { 70 28 }
+						    enabled = "[Not(Or( Or( GetVariableSystem.Exists('gui_zero_seven'), GetVariableSystem.Exists('gui_zero_eight')), Or(GetVariableSystem.Exists('gui_one_one'), GetVariableSystem.Exists('gui_one_two'))))]"
+						    raw_tooltip = "Multiply Gui lighting by 0.9"
+						    raw_text = "0.9"
+					        onclick = "[GetVariableSystem.Toggle( 'gui_zero_nine' )]"
+					        onclick = "[ExecuteConsoleCommand('shader_debug gui_zero_nine')]"
+						}
+						button_standard = {
+						    size = { 70 28 }
+						    enabled = "[Not(Or( Or( GetVariableSystem.Exists('gui_zero_seven'), GetVariableSystem.Exists('gui_zero_eight')), Or(GetVariableSystem.Exists('gui_zero_nine'), GetVariableSystem.Exists('gui_one_two'))))]"
+						    raw_tooltip = "Multiply Gui lighting by 1.1"
+					        raw_text = "1.1"
+					        onclick = "[GetVariableSystem.Toggle( 'gui_one_one' )]"
+					        onclick = "[ExecuteConsoleCommand('shader_debug gui_one_one')]"
+						}
+						button_standard = {
+						    size = { 70 28 }
+						    enabled = "[Not(Or( Or( GetVariableSystem.Exists('gui_zero_seven'), GetVariableSystem.Exists('gui_zero_eight')), Or(GetVariableSystem.Exists('gui_zero_nine'), GetVariableSystem.Exists('gui_one_one'))))]"
+						    raw_tooltip = "Multiply Gui lighting by 1.2"
+					        raw_text = "1.2"
+					        onclick = "[GetVariableSystem.Toggle( 'gui_one_two' )]"
+					        onclick = "[ExecuteConsoleCommand('shader_debug gui_one_two')]"
+						}
+					}
+				}
+			}
+		}
+    }
+}
