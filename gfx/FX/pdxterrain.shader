@@ -513,6 +513,12 @@ PixelShader =
 
 				Flatmap = ApplyFlatmapOverlay( Flatmap, MapCoords );
 
+				float CountryId = SampleControllerIndex( MapCoords ).r;
+				if( CountryId < 0  && !_EnableMapPowerBloc )	 // Remove fluff overlay from war areas and powerblocs
+				{
+					Flatmap = ApplyFlatmapOverlay( Flatmap, MapCoords );
+				}
+
 				// Flatmap color
 				float3 FinalColor = Flatmap;
 

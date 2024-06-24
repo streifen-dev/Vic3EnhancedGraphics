@@ -34,7 +34,7 @@ default_popup =  {
 		visible = "[GetVariableSystem.HasValue( 'finder_tabs', 'enhanced_graphics' )]"
 		position = { 0 24 }
 		size = { 85% 40 }
-		text = "Enhanced Graphics Settings"
+		raw_text = "Enhanced Graphics Settings"
 		elide = right
 		parentanchor = hcenter
 		align = center|nobaseline
@@ -74,7 +74,7 @@ default_popup =  {
 				raw_text = "#Bold Find Location#!"
 			}
 			blockoverride "first_button_name" {
-				raw_text = "find_location_tab"
+				raw_text = ""
 			}
 
 			blockoverride "second_button" {
@@ -153,7 +153,7 @@ default_popup =  {
 										margin_left = 15
 										textbox = {
 											autoresize = yes
-											text = "#BOLD [Location.GetName]#!"
+											raw_text = "#BOLD [Location.GetName]#!"
 											align = nobaseline
 											using = fontsize_large
 										}
@@ -197,7 +197,7 @@ default_popup =  {
 									textbox = {
 										visible = "[InDebugMode]"
 										autoresize = yes
-										text = "DEBUG ID: [Location.GetID]"
+										raw_text = "DEBUG ID: [Location.GetID]"
 										parentanchor = right|vcenter
 										widgetanchor = right|vcenter
 										align = right|nobaseline
