@@ -1,8 +1,5 @@
 Includes = {
 	"jomini/jomini_dof.fxh"
-	# MOD(map-skybox)
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 supports_additional_shader_options = {
@@ -47,10 +44,6 @@ PixelShader =
 			#endif
 				
 				float HeightScaling = RemapClamped( FocusDepth, _HeightMin, _HeightMax, 0.0f, 1.0f );
-				// MOD
-				// NOTE: This shader is weird, I think the red channel of this PixelShaderCoc is actually the alpha of the DOF effect
-				HeightScaling *= SKY_IsCameraTilted() ? 0.0f : HeightScaling;
-				// END MOD
 				float BlurAmount = lerp( _BlurMin, _BlurMax, HeightScaling );
 				BlurAmount = _BlurScale * pow( BlurAmount, _BlurExponent );
 

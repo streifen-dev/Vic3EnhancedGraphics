@@ -1,8 +1,4 @@
 Includes = {
-	# MOD(map-skybox)
-	"cw/camera.fxh"
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 
@@ -153,13 +149,6 @@ PixelShader
 				Diffuse *= TintColor;
 				
 				float4 Mask = SampleMask( Input.MaskUV, MaskTexture );
-
-				// MOD(map-skybox)
-				float4 Out = float4( Diffuse * Mask );
-				Out.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				return Out;
-				//return float4( Diffuse * Mask );
-				// END MOD
 
 			}
 		]]

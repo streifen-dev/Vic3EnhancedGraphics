@@ -1,9 +1,6 @@
 Includes = {
 	"jomini/jomini_colormap.fxh"
 	"jomini/gradient_border_constants.fxh"
-	# MOD(map-skybox)
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 PixelShader = 
@@ -111,10 +108,6 @@ PixelShader =
 			float4 Color;
 			Color.rgb = lerp( PrimaryColor.rgb * GB_GradientColorMul, PrimaryColor.rgb * GB_EdgeColorMul, Edge );
 			Color.a = PrimaryColor.a * max( GradientAlpha * ( 1.0f - pow( Edge, 2 ) ), GB_EdgeAlpha * Edge );
-
-			// MOD(map-skybox)
-			Color.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-			// END MOD
 
 			return Color;
 		}

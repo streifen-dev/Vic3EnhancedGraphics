@@ -7,9 +7,6 @@ Includes = {
 	"sharedconstants.fxh"
 	"distance_fog.fxh"
 	"fog_of_war.fxh"
-	# MOD(map-skybox)
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 VertexShader =
@@ -182,10 +179,6 @@ PixelShader =
 
 				// Distance fog
 				Color = GameApplyDistanceFog( Color, Input.WorldSpacePos );
-
-				// MOD(map-skybox)
-				Diffuse.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				// END MOD
 
 				// Close fade
 				Diffuse.a = FadeCloseAlpha( Diffuse.a );

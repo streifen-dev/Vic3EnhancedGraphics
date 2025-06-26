@@ -10,9 +10,6 @@ Includes = {
 	"ssao_struct.fxh"
 	"pdxverticalborder.fxh"
 	"dynamic_masks.fxh"
-	# MOD(map-skybox)
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 Code
@@ -344,10 +341,6 @@ PixelShader =
 				Diffuse.a = FadeCloseAlpha( Diffuse.a );
 				Diffuse.a *= _Alpha;
 
-				// MOD(map-skybox)
-				Diffuse.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				// END MOD
-
 				// Output
 				Out.Color = Diffuse;
 
@@ -436,10 +429,6 @@ PixelShader =
 
 				// Flatmap
 				ApplyWarFlatmapDiffuse( Diffuse.rgb, Alpha, Input.WorldSpacePos.xz, Input.UV );
-
-				// MOD(map-skybox)
-				Diffuse.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				// END MOD
 
 				// Output
 				Out.Color.rgb = Diffuse.rgb;
@@ -553,10 +542,6 @@ PixelShader =
 
 				// Flatmap
 				ApplyEscalationPlayFlatmapDiffuse( Diffuse.rgb, Alpha, Input.WorldSpacePos.xz, Input.UV );
-
-				// MOD(map-skybox)
-				Diffuse.a *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				// END MOD
 
 				// Output
 				Out.Color.rgb = Diffuse.rgb;

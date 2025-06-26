@@ -11,9 +11,6 @@ Includes = {
 	"fog_of_war.fxh"
 	"sharedconstants.fxh"
 	"edgeofworld.fxh"
-	# MOD(map-skybox)
-	"gh_camera_utils.fxh"
-	# END MOD
 }
 
 VertexStruct VS_OUTPUT_EDGEOFWORLD
@@ -118,10 +115,6 @@ PixelShader =
 				float FadeBottom = FadeDist - Input.WorldSpacePos.z;
 				FadeBottom = smoothstep( 0.0f, FadeDist, FadeBottom);
 				Alpha *= FadeTop + FadeBottom;
-
-				// MOD(map-skybox)
-				Alpha *= GH_GetDefaultCameraPitchAlphaMultiplier();
-				// END MOD
 
 				return float4( Color, Alpha );
 			}

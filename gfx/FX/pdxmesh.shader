@@ -120,21 +120,6 @@ PixelShader =
 		Ref = CountryUnitColors03
 		type = float4
 	}
-
-	# MOD(map-skybox)
-	TextureSampler SkyboxSample
-	{
-		Index = 14
-		MagFilter = "Linear"
-		MinFilter = "Linear"
-		MipFilter = "Linear"
-		SampleModeU = "Clamp"
-		SampleModeV = "Clamp"
-		Type = "Cube"
-		File = "gfx/map/environment/SkyBox.dds"
-		srgb = yes
-	}
-	# END MOD
 }
 
 VertexStruct VS_OUTPUT
@@ -832,39 +817,6 @@ PixelShader =
 			}
 		]]
 	}
-
-	# MOD(map-skybox)
-	MainCode SKYX_PS_sky
-	{
-		Input = "VS_OUTPUT"
-		Output = "PDX_COLOR"
-		Code
-		[[
-			PDX_MAIN
-			{
-				float3 FromCameraDir = normalize(Input.WorldSpacePos - CameraPosition);
-				float4 CubemapSample = PdxTexCube(SkyboxSample, FromCameraDir);
-
-				// Day/Night adjustment, this could be better to create a sunset effect
-
-				float4 intermediateColor = lerp(_FoWCloudsColor, _FoWCloudsColorSunset, _DayNightValue);
-				float4 finalColor = lerp(intermediateColor, _FoWCloudsColorNight, _DayNightValue);
-				float brightness = max(2 * abs(_DayNightValue - 0.5), 0.075);
-				CubemapSample *= finalColor;
-				CubemapSample *= brightness;
-
-				// Sunset is between 0.125 and 0.5 of _DayNightValue
-				float factor = smoothstep(0.125, 0.5, _DayNightValue);
-				CubemapSample *= lerp(1.0, _FoWCloudsColorSunset, factor);
-
-				//float DayNightModifier = max(_DayNightBrightness, 0.075);
-				//CubemapSample.rgb *= DayNightModifier;
-
-				return CubemapSample;
-			}
-		]]
-	}
-	# END MOD
 }
 
 
@@ -1128,23 +1080,3 @@ Effect flatmap_unit
 	BlendState = "alpha_blend"
 	DepthStencilState = "DepthStencilStateAlphaBlend"
 }
-
-# MOD(map-skybox)
-Effect SKYX_sky
-{
-	VertexShader = "VS_standard"
-	PixelShader = "SKYX_PS_sky"
-}
-
-Effect SKYX_sky_mapobject
-{
-	VertexShader = "VS_mapobject"
-	PixelShader = "SKYX_PS_sky"
-}
-
-Effect SKYX_sky_selection_mapobject
-{
-	VertexShader = "VS_mapobject"
-	PixelShader = "SKYX_PS_sky"
-}
-# END MOD
